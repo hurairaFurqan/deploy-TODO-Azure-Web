@@ -1,0 +1,84 @@
+.wrapper {
+  width: 420px;
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  color: white;
+  border-radius: 10px;
+  padding: 30px 40px;
+
+  h1 {
+    font-size: 36px;
+  }
+  .inputBox {
+    margin: 0 0 40px 0;
+    input {
+      width: 85%;
+      height: 100%;
+      color: white;
+      background: transparent;
+      border: none;
+      outline: none;
+      border: 2px solid rgb(255, 255, 255, 0.4);
+      border-radius: 40px;
+      font-size: 16px;
+      padding: 10px 35px 10px 10px;
+    }
+    .icon {
+      position: absolute;
+      margin-top: 13px;
+      transform: translateX(-30px);
+      font-size: 16px;
+    }
+  }
+  ::placeholder {
+    color: rgb(200, 200, 200);
+  }
+  button {
+    width: 95%;
+    height: 45px;
+    background: white;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgb(0, 0, 0, 0.1);
+    font-size: 16px;
+    color: #333;
+    font-weight: 700;
+    margin-top: 40px;
+    cursor: pointer;
+  }
+  button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+      0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  }
+}
+.errorMsg {
+  font-size: 14px;
+  transform: translateY(-35px);
+  position: absolute;
+  font-size: 14px;
+  color: #ff2424;
+  padding-left: 15px;
+  width: 80%;
+}
+.errorNotification {
+  font-size: 14px;
+  position: absolute;
+  font-size: 14px;
+  color: #ff2424;
+  padding-left: 15px;
+  width: 80%;
+}
+.registerLink {
+  font-size: 14px;
+  color: white;
+  .link {
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 600;
+    color: white;
+    margin-left: 10px;
+  }
+}
