@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { Home, Register, Login } from "./components";
 
-import { loginUser } from "./api/mockApiService";
+import { loginUser, registerUser, mockUsers } from "./api/mockApiService";
 
 function App() {
   // insert here the token
@@ -25,7 +25,7 @@ function App() {
         <Router>
           <Routes>
             {isLoggedIn && <Route path="/" exact element={<Home />} />}
-            <Route path="/register" element={<Register />} />
+            <Route path="/register" element={<Register registerUser={registerUser} handleLogin={handleLogin} mockUsers={mockUsers} />} />
             <Route
               path="/login"
               element={

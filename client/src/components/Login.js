@@ -6,6 +6,7 @@ import axios from "axios";
 import "../css/loginForm.css";
 // rsc
 
+
 const LoginForm = ({ loginUser, handleLogin }) => {
     const [data, setData] = useState({ email: "", password: "" });
 
@@ -91,9 +92,8 @@ const LoginForm = ({ loginUser, handleLogin }) => {
                             onChange={handleChange}
                             type="text"
                             name="email"
-                            defaultValue={data.email}
+                            defaultValue={data.email || ""}
                             autoComplete="off"
-                        // value={data.email}
                         />
                         <MdEmail className="icon" />
                     </div>
@@ -106,13 +106,14 @@ const LoginForm = ({ loginUser, handleLogin }) => {
                             onChange={handleChange}
                             type="password"
                             name="password"
-                            defaultValue={data.password}
-                        // value={data.password}
+                            defaultValue={data.password || ""}
                         />
                         <FaLock className="icon" />
                     </div>
                     {error.password && <div className="errorMsg">{error.password}</div>}
-                    {error.message && <div className="errorNotification">{error.message}</div>}
+                    {error.message && (
+                        <div className="errorNotification">{error.message}</div>
+                    )}
                     <button type="submit">Log In</button>
 
                     <div className="registerLink">
