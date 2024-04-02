@@ -1,23 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import "./css/App.css";
+import { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { Home, Register, Login } from "./components";
+
+import { loginUser, registerUser, mockUsers } from "./api/mockApiService";
 
 function App() {
+  // insert here the token
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = (e) => {
+    // call the loginUser function here
+    setIsLoggedIn(e);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="App-header">
+        <Router>
+          <Routes>
+            {isLoggedIn && <Route path="/" exact element={<Home />} />}
+            <Route path="/register" element={<Register registerUser={registerUser} handleLogin={handleLogin} mockUsers={mockUsers} />} />
+            <Route
+              path="/login"
+              element={
+                <Login loginUser={loginUser} handleLogin={handleLogin} />
+              }
+            />
+            <Route path="*" element={<Navigate replace to="/login" />} />
+          </Routes>
+        </Router>
+      </div>
     </div>
   );
 }
