@@ -3,11 +3,16 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const dbConnect = require("./utils/dbConnect");
+
+const authRouter = require("./routers/auth.router");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 dbConnect();
 
+
+
+app.use("/auth", authRouter);
 app.use("*", (req, res) => {
     res.status(404).json(`Internal Server Error at ${req.originalUrl}`)
 })
