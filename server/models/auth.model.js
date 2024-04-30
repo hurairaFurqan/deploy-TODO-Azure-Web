@@ -2,7 +2,15 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const schema = new mongoose.Schema({
-    name: {
+    firstName: {
+        required: [true, "Please tell us your name"],
+        type: String,
+        trim: true,
+        unique: true,
+        // maxlength: [20, "Max length exceeded"],
+        // minlength: [1, "min length exceeded"],
+    },
+    lastName: {
         required: [true, "Please tell us your name"],
         type: String,
         trim: true,
@@ -27,7 +35,7 @@ const schema = new mongoose.Schema({
 });
 
 schema.pre("save", async function (next) {
-    this.password = bcrypt.hashSync(this.password, 10);
+    this.password = bcrypt.hashSync(this.password, saltRounds);
     next();
 });
 

@@ -6,7 +6,8 @@ const jwt = require("jsonwebtoken");
 
 exports.signUp = catchAsync(async (req, res) => {
     let user = new userModel({
-        name: req.body.name,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password
     })
@@ -36,13 +37,12 @@ exports.signIn = catchAsync(async (req, res) => {
             id: user._id,
         }, process.env.SECRET_KEY)
 
-        const data = {
-            token,
-            user
-        }
-
-        res.status(200).json(data)
-    } else {
-        res.status(404).json("wrong password")
+        const person = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            role: user.role,
+        };
+        res.status(200).json({ token: token, user: person });
     }
 })
