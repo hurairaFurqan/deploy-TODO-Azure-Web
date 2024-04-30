@@ -3,17 +3,17 @@ import { FaLock, FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/loginForm.css";
+import axios from "axios";
+import { API_BASEURL_AUTH } from "../data/constants";
 // rsc
 
-const RegisterForm = ({ registerUser, mockUsers, handleLogin }) => {
+const RegisterForm = (props) => {
     const [data, setData] = useState({
         firstName: "",
         lastName: "",
         email: "",
         password: "",
     });
-
-    const [msgShow, setMsgShow] = useState(false);
     const [error, setError] = useState({
         firstName: "",
         lastName: "",
@@ -64,48 +64,20 @@ const RegisterForm = ({ registerUser, mockUsers, handleLogin }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Check if there are any validation errors
-        if (
-            error.firstName ||
-            error.lastName ||
-            error.email ||
-            error.password ||
-            error.passwordRepeat
-        ) {
-            setError((prevErrors) => ({
-                ...prevErrors,
-                message: "Please fix all validation errors before submitting.",
-            }));
-            return;
-        }
+        // Proceed with registration
+        await axios
+            .post(`${API_BASEURL_AUTH}/signUp`, data)
+            .then((response) => {
+                console.log(response.data);
+                navigate("/")
+            })
+            .catch((error) => {
+                console.log(error.message);
+            })
 
-        try {
-            // Proceed with registration
-            const user = await registerUser(
-                data.firstName,
-                data.lastName,
-                data.email,
-                data.password
-            );
-            if (user) {
-                console.log("New User: ", data,);
-                console.log("All Users", mockUsers);
-                handleLogin(true);
-                navigate("/");
-            } else {
-                setError((prevErrors) => ({
-                    ...prevErrors,
-                    message: "Invalid email or password",
-                }));
-            }
-        } catch (error) {
-            setMsgShow(true);
-            setError((prevErrors) => ({
-                ...prevErrors,
-                message: "An error occurred while logging in",
-            }));
-        }
-    };
+
+    }
+
 
     return (
         <>
@@ -182,7 +154,7 @@ const RegisterForm = ({ registerUser, mockUsers, handleLogin }) => {
                     <div className="registerLink">
                         <p>
                             Already have an account?
-                            <Link className="link" to="/login">
+                            <Link className="link" to="/">
                                 Login
                             </Link>
                         </p>
@@ -191,6 +163,6 @@ const RegisterForm = ({ registerUser, mockUsers, handleLogin }) => {
             </section>
         </>
     );
-};
+}
 
 export default RegisterForm;

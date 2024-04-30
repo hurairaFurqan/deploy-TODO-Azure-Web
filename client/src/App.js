@@ -1,40 +1,54 @@
 import "./css/App.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-import { Home, Register, Login } from "./components";
+import { AuthContext } from "./context/AuthContext";
+import LoginForm from "./components/Login";
+import RegisterForm from "./components/Register";
+import HomeForm from "./components/Home";
 
-import { loginUser, registerUser, mockUsers } from "./api/mockApiService";
+
+
+
 
 function App() {
-  // insert here the token
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogin = (e) => {
-    // call the loginUser function here
-    setIsLoggedIn(e);
-  };
-
+  const { token, user } = useContext(AuthContext);
   return (
     <div className="App">
       <div className="App-header">
-        <Router>
+
+
+        {token ? (
+          user ? (
+            <Routes>
+              <Route path="/home" element={<HomeForm></HomeForm>}></Route>
+            </Routes>
+          ) : (
+            <p>loading...</p>
+          )
+        ) : (
           <Routes>
-            {isLoggedIn && <Route path="/" exact element={<Home />} />}
-            <Route path="/register" element={<Register registerUser={registerUser} handleLogin={handleLogin} mockUsers={mockUsers} />} />
-            <Route
-              path="/login"
-              element={
-                <Login loginUser={loginUser} handleLogin={handleLogin} />
-              }
-            />
-            <Route path="*" element={<Navigate replace to="/login" />} />
+            <Route path="/" element={<LoginForm></LoginForm>}></Route>
+            <Route path="/register" element={<RegisterForm></RegisterForm>}></Route>
           </Routes>
-        </Router>
+        )}
+
+
+        {/* <Routes>
+          { }
+          <Route path="/register" element={<RegisterForm />} />
+          <Route
+            path="/"
+            element={
+              <LoginForm />
+            }
+          />
+          {token && user && <Route path="/" exact element={<HomeForm />} />}
+        </Routes> */}
       </div>
     </div>
   );
