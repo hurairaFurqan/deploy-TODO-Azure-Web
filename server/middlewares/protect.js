@@ -11,6 +11,7 @@ module.exports = async (req, res, next) => {
     }
     if (!token) {
         res.send(401).json({ message: "no token found" })
+        
     }
     try {
         const decodedToken = jwt.verify(token, process.env.SECRET_KEY);

@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../css/loginForm.css";
+import { API_BASEURL_AUTH } from "../data/constants";
+import { AuthContext } from "../context/AuthContext";
 // rsc
 
 
-const LoginForm = ({ loginUser, handleLogin }) => {
-    const [data, setData] = useState({ email: "", password: "" });
+const LoginForm = (props) => {
 
-    const [msgShow, setMsgShow] = useState(false);
+    const {login} = useContext(AuthContext);
+    const [data, setData] = useState({ email: "", password: "" });
     const [error, setError] = useState({ email: "", password: "", message: "" });
 
     const navigate = useNavigate();
@@ -45,39 +47,19 @@ const LoginForm = ({ loginUser, handleLogin }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const user = await loginUser(data.email, data.password);
-            if (user) {
-                handleLogin(true);
-                navigate("/");
-            } else {
-                setError((prevErrors) => ({
-                    ...prevErrors,
-                    message: "Invalid email or password",
-                }));
-            }
-        } catch (error) {
-            setMsgShow(true);
-            setError((prevErrors) => ({
-                ...prevErrors,
-                message: "An error occurred while logging in",
-            }));
-        }
-
-        // try {
-        // 	const url = "http://localhost:8080/api/auth";
-        // 	const { data: res } = await axios.post(url, data);
-        // 	localStorage.setItem("token", res.data);
-        // 	navigate('/');
-        // } catch (error) {
-        // 	if (
-        // 		error.response &&
-        // 		error.response.status >= 400 &&
-        // 		error.response.status <= 500
-        // 	) {
-        // 		setError(error.response.data.message);
-        // 	}
-        // }
+        
+        await axios
+            .post(`${API_BASEURL_AUTH}/signIn`, data)
+            .then((response) => {
+                const{token, user} = response.data
+                if (token && user) {
+                    login(token, user);
+                    navigate("/home")
+                }
+            })
+            .catch((error) => {
+                console.log(error.message);
+            })
     };
 
     return (

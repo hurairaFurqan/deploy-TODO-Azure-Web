@@ -15,7 +15,7 @@ dbConnect();
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("*", (req, res) => {
-    res.status(404).json(`Internal Server Error at ${req.originalUrl}`)
+    res.status(500).json(`Internal Server Error at ${req.originalUrl}`)
 })
 
 app.listen(process.env.PORT, () => {
