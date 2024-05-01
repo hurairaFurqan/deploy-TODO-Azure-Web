@@ -2,20 +2,19 @@ import React, { useContext, useState } from "react";
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import "../css/loginForm.css";
-import { API_BASEURL_AUTH } from "../data/constants";
-import { AuthContext } from "../context/AuthContext";
-// rsc
+import { useDispatch } from "react-redux";
+import { getSignIn, getSignUp } from "../store/AuthRequests";
 
 
 const LoginForm = (props) => {
 
-    const {login} = useContext(AuthContext);
+    const dispatch = useDispatch();
+    const {handleSuccess} = props;
+
     const [data, setData] = useState({ email: "", password: "" });
     const [error, setError] = useState({ email: "", password: "", message: "" });
 
-    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -48,18 +47,7 @@ const LoginForm = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        await axios
-            .post(`${API_BASEURL_AUTH}/signIn`, data)
-            .then((response) => {
-                const{token, user} = response.data
-                if (token && user) {
-                    login(token, user);
-                    navigate("/home")
-                }
-            })
-            .catch((error) => {
-                console.log(error.message);
-            })
+        dispatch(getSignIn(data));
     };
 
     return (

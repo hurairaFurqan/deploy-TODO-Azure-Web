@@ -4,7 +4,7 @@ import React from 'react';
 const HomeForm = props => {
     return (
         <div>
-            welcome you are logged in!
+            
         </div>
     );
 };
