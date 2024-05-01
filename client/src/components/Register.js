@@ -5,9 +5,12 @@ import { Link, useNavigate } from "react-router-dom";
 import "../css/loginForm.css";
 import axios from "axios";
 import { API_BASEURL_AUTH } from "../data/constants";
+import { useDispatch } from "react-redux";
+import { getSignUp } from "../store/AuthRequests";
 // rsc
 
 const RegisterForm = (props) => {
+    const dispatch = useDispatch();
     const [data, setData] = useState({
         firstName: "",
         lastName: "",
@@ -63,18 +66,7 @@ const RegisterForm = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Proceed with registration
-        await axios
-            .post(`${API_BASEURL_AUTH}/signUp`, data)
-            .then((response) => {
-                console.log(response.data);
-                navigate("/")
-            })
-            .catch((error) => {
-                console.log(error.message);
-            })
-
+        dispatch(getSignUp(data))
 
     }
 

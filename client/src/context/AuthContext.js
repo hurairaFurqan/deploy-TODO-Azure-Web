@@ -8,7 +8,6 @@ export const AuthProvider = ({ children }) => {
     const tokenLocal = JSON.parse(window.localStorage.getItem("token"));
     const [token, setToken] = useState(tokenLocal);
     const [user, setUser] = useState();
-    console.log(token, user);
     useEffect(() => {
 
         if (token) {
@@ -21,7 +20,6 @@ export const AuthProvider = ({ children }) => {
                 }
                 const res = await axios.get(`${API_BASEURL_USER}/getme`, config);
                 setUser(res.data);
-                console.log("user data", res.data);
             })()
         }
     }, [token])
