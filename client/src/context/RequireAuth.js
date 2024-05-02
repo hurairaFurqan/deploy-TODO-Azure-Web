@@ -3,8 +3,6 @@ import { useSelector } from "react-redux"
 
 const RequireAuth = () => {
     const userToken = useSelector((state) => state.authRequests.userToken)
-    const userInfo = useSelector((state) => state.authRequests.userInfo)
-    console.log('User Token in RequireAuth:', userToken);
     const location = useLocation()
 
 
