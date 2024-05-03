@@ -9,7 +9,7 @@ export const getTodos = () => {
             .then((todos) => {
                 dispatch({
                     type: "GET_TODOS",
-                    todos,
+                    todos: todos.data 
                 });
             })
             .catch((error) => {
@@ -108,14 +108,31 @@ export const checkTodo = (id) => {
         }
     };
 };
+
+// export const checkTodo = (id) => {
+
+//     return (dispatch) => {
+//         axios
+//             .get(`${API_BASEURL_TODO}/todos/${id}`, setHeaders())
+//             .then((todos) => {
+//                 dispatch({
+//                     type: "CHECK_TODOS",
+//                     todos: todos.data
+//                 });
+//             })
+//             .catch((error) => {
+//                 console.log(error);
+//             });
+//     };
+// };
 // export const checkTodo = (id) => {
 //     return async (dispatch) => {
 //         try {
 //             const response = await axios.patch(`${API_BASEURL_TODO}/todos/${id}`);
 //             dispatch({
 //                 type: 'CHECK_TODO',
-//                 todo: response.data // Ensure this data is being set correctly
-//             }); console.log("todoAction sent", response.data)
+//                 todo: response.data
+//             }); 
 //         } catch (error) {
 //             console.error(error);
 //         }

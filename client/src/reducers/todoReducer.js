@@ -1,7 +1,7 @@
 const TodoReducer = (todos = [], action) => {
     switch (action.type) {
         case "GET_TODOS":
-            return action.todos.data;
+            return action.todos;
         case "ADD_TODO":
           alert("A todo was added...");
           return [action.todo.data, ...todos];
@@ -12,8 +12,11 @@ const TodoReducer = (todos = [], action) => {
           );
       case "CHECK_TODO":
           alert("A todo status was changed...");
+
+            console.log("todos", todos);
+            console.log("action", action);
           return todos.map((todo) =>
-              todo._id === action.todo.data._id ? action.todo.data : todo
+              todo._id === action.todo._id ? action.todo : todo
           );
       case "DELETE_TODO":
           alert("A todo was deleted...");
