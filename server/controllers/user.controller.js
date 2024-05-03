@@ -11,6 +11,7 @@ exports.getUser = catchAsync(async (req, res) => {
     const user = req.params;
     if (user) {
         const person = {
+            _id: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,

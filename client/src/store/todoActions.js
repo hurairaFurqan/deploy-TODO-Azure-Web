@@ -1,12 +1,11 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { API_BASEURL_AUTH, setHeaders } from "../data/constants";
-import { toast } from "react-toastify";
+import { API_BASEURL_TODO, setHeaders } from "../data/constants";
 
 export const getTodos = () => {
+
     return (dispatch) => {
         axios
-            .get(`${API_BASEURL_AUTH}/todos`, setHeaders())
+            .get(`${API_BASEURL_TODO}/todos`, setHeaders())
             .then((todos) => {
                 dispatch({
                     type: "GET_TODOS",
@@ -19,15 +18,26 @@ export const getTodos = () => {
     };
 };
 
-export const addTodo = (newTodo) => {
-    return (dispatch, getState) => {
-        const userInfo = useSelector((state) => state.authRequests.userInfo);
-        const author = getState().auth.name;
-        const uid = getState().auth._id;
+// export const getTodos = () => {
+//     return async (dispatch) => {
+//         try {
+//             const response = await axios.get(`${API_BASEURL_TODO}/todos`, setHeaders());
+//             dispatch({
+//                 type: 'GET_TODOS',
+//                 todos: response.data // Extract only the data
+//             });
+//         } catch (error) {
+//             console.error(error);
+//         }
+//     };
+// };
+
+export const addTodo = (newTodo, author, _id) => {
+    return (dispatch) => {
         axios
             .post(
-                `${API_BASEURL_AUTH}/todos`,
-                { ...newTodo, author, uid },
+                `${API_BASEURL_TODO}/todos`,
+                { ...newTodo, author, _id },
                 setHeaders()
             )
             .then((todo) => {
@@ -39,9 +49,9 @@ export const addTodo = (newTodo) => {
             .catch((error) => {
                 console.log(error.response);
 
-                toast.error(error.response?.data, {
-                    position: toast.POSITION.BOTTOM_RIGHT,
-                });
+                // toast.error(error.response?.data, {
+                //     position: toast.POSITION.BOTTOM_RIGHT,
+                // });
             });
     };
 };
@@ -49,7 +59,7 @@ export const addTodo = (newTodo) => {
 export const updateTodo = (updatedTodo, id) => {
     return (dispatch) => {
         axios
-            .put(`${API_BASEURL_AUTH}/todos/${id}`, updatedTodo, setHeaders())
+            .put(`${API_BASEURL_TODO}/todos/${id}`, updatedTodo, setHeaders())
             .then((todo) => {
                 dispatch({
                     type: "UPDATE_TODO",
@@ -58,47 +68,56 @@ export const updateTodo = (updatedTodo, id) => {
             })
             .catch((error) => {
                 console.log(error);
-                toast.error(error.response?.data, {
-                    position: toast.POSITION.BOTTOM_RIGHT,
-                });
+                // toast.error(error.response?.data, {
+                //     position: toast.POSITION.BOTTOM_RIGHT,
+                // });
             });
     };
 };
 
-// export const deleteTodo = (id) => {
-//     return (dispatch) => {
-//         axios
-//             .delete(`${API_BASEURL_AUTH}/todos/${id}`, setHeaders())
-//             .then(() => {
-//                 dispatch({
-//                     type: "DELETE_TODO",
-//                     id,
-//                 });
-//             })
-//             .catch((error) => {
-//                 console.log(error);
-//                 toast.error(error.response?.data, {
-//                     position: toast.POSITION.BOTTOM_RIGHT,
-//                 });
-//             });
-//     };
-// };
+export const deleteTodo = (id) => {
+    return (dispatch) => {
+        axios
+            .delete(`${API_BASEURL_TODO}/todos/${id}`, setHeaders())
+            .then(() => {
+                dispatch({
+                    type: "DELETE_TODO",
+                    id,
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+// toast.error(error.response?.data, {
+//     position: toast.POSITION.BOTTOM_RIGHT,
+// });
+            });
+    };
+};
 
+export const checkTodo = (id) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.patch(`${API_BASEURL_TODO}/todos/${id}`);
+            dispatch({
+                type: 'CHECK_TODO',
+                todo: response.data
+            });
+            response.data("response.data", response)
+        } catch (error) {
+            console.error(error);
+        }
+    };
+};
 // export const checkTodo = (id) => {
-//     return (dispatch) => {
-//         axios
-//             .patch(`${API_BASEURL_AUTH}/todos/${id}`, {}, setHeaders())
-//             .then((todo) => {
-//                 dispatch({
-//                     type: "CHECK_TODO",
-//                     todo,
-//                 });
-//             })
-//             .catch((error) => {
-//                 console.log(error);
-//                 toast.error(error.response?.data, {
-//                     position: toast.POSITION.BOTTOM_RIGHT,
-//                 });
-//             });
+//     return async (dispatch) => {
+//         try {
+//             const response = await axios.patch(`${API_BASEURL_TODO}/todos/${id}`);
+//             dispatch({
+//                 type: 'CHECK_TODO',
+//                 todo: response.data // Ensure this data is being set correctly
+//             }); console.log("todoAction sent", response.data)
+//         } catch (error) {
+//             console.error(error);
+//         }
 //     };
 // };

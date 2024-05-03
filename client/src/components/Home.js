@@ -1,3 +1,4 @@
+import "../css/Home.css";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LogoutButton from "../context/logoutBtn";
@@ -11,21 +12,20 @@ const Home = (props) => {
         isComplete: false,
     });
 
-    return (
-        <div>
-            <button style={{ backgroundColor: "white" }}>{userInfo.firstName}</button>
-            <LogoutButton />
-            {userInfo ? (
-                <>
-                    <AddTodo todo={todo} setTodo={setTodo} />
-                    <ListTodos todo={todo} setTodo={setTodo} />
-                </>
-            ) : (
-                <>
-                    <ListTodos todo={todo} setTodo={setTodo} />
-                </>
-            )}
+    return (<>
+
+        <div className="header">
+            <h3 >Welcome back {userInfo.firstName}!</h3>
+            <div className="menu"><LogoutButton /></div>
+
         </div>
+        <div className="container">
+            <h1 className="mb-10">Get things done!</h1>
+            <AddTodo todo={todo} setTodo={setTodo} />
+
+            <ListTodos todo={todo} setTodo={setTodo} />
+
+        </div></>
     );
 };
 

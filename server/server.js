@@ -5,7 +5,7 @@ const cors = require("cors");
 const dbConnect = require("./utils/dbConnect");
 const userRouter = require("./routers/user.router")
 const authRouter = require("./routers/auth.router");
-const todos = require("./routers/todo.route");
+const todos = require("./routers/todo.router");
 const winston = require("winston");
 
 winston.exceptions.handle(
@@ -25,13 +25,16 @@ dbConnect();
 
 
 
+app.use('/api/todos', require('./routers/todo.router'));
+
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
-app.use("/api/todos", todos)
+// app.use("/api/todos", todos)
 app.use("*", (req, res) => {
-    res.status(500).json(`Internal Server Error at ${req.originalUrl}`)
+    res.status(500).json(`Internal Server Error at ${req}`)
 })
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is listening at Port ${process.env.PORT}`);
 })
+

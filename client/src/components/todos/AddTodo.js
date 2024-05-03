@@ -1,33 +1,16 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-
-// import { makeStyles } from "@material-ui/core/styles";
-// import { TextField, Button } from '@material-ui/core';
-// import { Send } from '@material-ui/icons';
-
-import { addTodo, updateTodo } from '../../store/todoActions';
-
-// const useStyles = makeStyles({
-//     formStyle: {
-//         margin: "0px auto",
-//         padding: "30px",
-//         borderRadius: "9px",
-//         boxShadow: "0px 0px 12px -3px #000000",
-//         display: "flex",
-//         justifyContent: "space-between",
-//     },
-//     submitButton: {
-//         marginLeft: "20px",
-//     }
-// });
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addTodo, updateTodo } from "../../store/todoActions";
+// import './AddTodo.css'; // Import a separate CSS file for styling
 
 const AddTodo = ({ todo, setTodo }) => {
-    // const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const userInfo = useSelector((state) => state.authRequests.userInfo);
+    const author = userInfo.firstName;
+    const _id = userInfo._id;
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         if (todo._id) {
             const id = todo._id;
             const updatedTodo = {
@@ -43,38 +26,36 @@ const AddTodo = ({ todo, setTodo }) => {
         } else {
             const newTodo = {
                 ...todo,
-                date: new Date()
-            }
-
-            dispatch(addTodo(newTodo));
+                date: new Date(),
+            };
+            dispatch(addTodo(newTodo, author, _id));
         }
-        setTodo({ name: '', isComplete: false });
-    }
+
+
+        setTodo({ name: "", isComplete: false });
+
+
+    };
 
     return (
-        <>
-            <form noValidate autoComplete="off"
-                // className={classes.formStyle} 
-                onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
+            <div className="input-group mb-3">
                 <input
-                    id="enter-todo"
-                    label="enterToDo"
-                    variant="outlined"
                     autoFocus
-                    fullwidth="true"
                     value={todo.name}
                     onChange={(e) => setTodo({ ...todo, name: e.target.value })}
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter task here"
                 />
-                <button variant="contained" color="primary"
-                    //  className={classes.submitButton} 
-                    type="submit">
-                    {/* <Send />
-                     */}
-                    send
-                </button>
-            </form>
-        </>
+                <div className="input-group-append">
+                    <button className="btn btn-info" type="submit">
+                        Add
+                    </button>
+                </div>
+            </div>
+        </form>
     );
-}
+};
 
 export default AddTodo;
