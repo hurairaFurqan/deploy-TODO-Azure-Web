@@ -34,7 +34,7 @@ app.use("*", (req, res) => {
     res.status(500).json(`Internal Server Error at ${req}`)
 })
 
-app.use(express.static("../client/build"));
+app.use(express.static("./client/build"));
 app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 })
