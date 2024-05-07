@@ -30,6 +30,10 @@ app.use('/api/todos', require('./routers/todo.router'));
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 // app.use("/api/todos", todos)
+app.use(express.static("./client/build"));
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname,"client", "build", "index.html"));
+})
 app.use("*", (req, res) => {
     res.status(500).json(`Internal Server Error at ${req}`)
 })
