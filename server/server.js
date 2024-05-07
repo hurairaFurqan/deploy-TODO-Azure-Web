@@ -34,10 +34,12 @@ app.use("*", (req, res) => {
     res.status(500).json(`Internal Server Error at ${req}`)
 })
 
-app.use(express.static("./client/build"));
+app.use(express.static('./client/build'));
+
 app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-})
+    res.sendFile(path.resolve(__dirname, "client", "build",
+        "index.html"));
+});
 app.listen(process.env.PORT, () => {
     console.log(`Server is listening at Port ${process.env.PORT}`);
 })
