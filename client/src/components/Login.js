@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useNavigate, useState } from "react";
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../css/loginForm.css";
 import { useDispatch } from "react-redux";
 import { getSignIn, getSignUp } from "../store/AuthRequests";
@@ -10,8 +10,7 @@ import { getSignIn, getSignUp } from "../store/AuthRequests";
 const LoginForm = (props) => {
 
     const dispatch = useDispatch();
-    const {handleSuccess} = props;
-
+    const { handleSuccess } = props;
     const [data, setData] = useState({ email: "", password: "" });
     const [error, setError] = useState({ email: "", password: "", message: "" });
 
@@ -48,6 +47,7 @@ const LoginForm = (props) => {
         e.preventDefault();
         
         dispatch(getSignIn(data));
+        window.location.href = '/home';
     };
 
     return (

@@ -68,6 +68,8 @@ const RegisterForm = (props) => {
         e.preventDefault();
         dispatch(getSignUp(data))
 
+        dispatch(getSignUp(data));
+        window.location.href = '/home';
     }
 
 

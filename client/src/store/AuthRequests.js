@@ -3,9 +3,8 @@ import axios from "axios";
 import { getToken } from "../utilities/Token";
 import { API_BASEURL_AUTH, API_BASEURL_USER } from "../data/constants";
 
-
 export const getSignIn = createAsyncThunk(
-  "auth /getSignIn",
+  "auth/getSignIn",
 
   async (values, { rejectWithValue }) => {
     try {
@@ -40,6 +39,7 @@ export const getSignUp = createAsyncThunk(
     return await axios
       .post(`${API_BASEURL_AUTH}/signUp`, data)
       .then((response) => response.data)
+      .then(alert("Successfully registered!"))
       .catch((error) => rejectWithValue(error.response.data));
   }
 );
