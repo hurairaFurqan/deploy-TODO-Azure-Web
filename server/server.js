@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const cors = require("cors");
+// const cors = require("cors");
 const dbConnect = require("./utils/dbConnect");
 const userRouter = require("./routers/user.router")
 const authRouter = require("./routers/auth.router");
@@ -20,7 +20,7 @@ winston.add(new winston.transports.File({ filename: "logfile.log" }));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 dbConnect();
 
 
