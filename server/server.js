@@ -1,7 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-// const cors = require("cors");
+const cors = require("cors");
+const helmet = require("helmet");
+
 const dbConnect = require("./utils/dbConnect");
 const userRouter = require("./routers/user.router")
 const authRouter = require("./routers/auth.router");
@@ -20,8 +22,16 @@ winston.add(new winston.transports.File({ filename: "logfile.log" }));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use(cors());
+app.use(helmet());
+const _dirname = path.dirname("");
+const buildPath = path.join(_dirname, "../client/build");
+console.log(buildPath);
+app.use(express.static(buildPath));
+app.use(cors({
+    "origin": "*"
+}));
 dbConnect();
+
 
 
 
@@ -29,17 +39,21 @@ app.use('/api/todos', require('./routers/todo.router'));
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
-// app.use("/api/todos", todos)
 app.use("*", (req, res) => {
     res.status(500).json(`Internal Server Error at ${req}`)
 })
 
-app.use(express.static('./client/build'));
 
-app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build",
-        "index.html"));
-});
+
+
+
+
+// app.use(express.static('./client/build'));
+
+// app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "client", "build",
+//         "index.html"));
+// });
 app.listen(process.env.PORT, () => {
     console.log(`Server is listening at Port ${process.env.PORT}`);
 })

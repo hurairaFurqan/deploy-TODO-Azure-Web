@@ -1,11 +1,11 @@
-export const API_BASEURL_AUTH = "https://ic722.azurewebsites.net/auth"
-export const API_BASEURL_USER = "https://ic722.azurewebsites.net/users"
-export const API_BASEURL_TODO = "https://ic722.azurewebsites.net/api"
+export const API_BASEURL_AUTH = "http://localhost:3000/auth"
+export const API_BASEURL_USER = "http://localhost:3000/users"
+export const API_BASEURL_TODO = "http://localhost:3000/api"
 
 export const setHeaders = () => {
     const headers = {
         headers: {
-            "x-auth-token": localStorage.getItem("token"),
+            "Bearer": localStorage.getItem("token"),
         },
     };
 
