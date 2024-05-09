@@ -1,6 +1,6 @@
-export const API_BASEURL_AUTH = "http://localhost:3000/auth"
-export const API_BASEURL_USER = "http://localhost:3000/users"
-export const API_BASEURL_TODO = "http://localhost:3000/api"
+export const API_BASEURL_AUTH = "web-version-todo-app.azurewebsites.net/auth"
+export const API_BASEURL_USER = "web-version-todo-app.azurewebsites.net/users"
+export const API_BASEURL_TODO = "web-version-todo-app.azurewebsites.net/api"
 
 export const setHeaders = () => {
     const headers = {

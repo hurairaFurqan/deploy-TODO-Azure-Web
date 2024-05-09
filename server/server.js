@@ -20,12 +20,14 @@ process.on("unhandledRejection", (error) => {
 
 winston.add(new winston.transports.File({ filename: "logfile.log" }));
 
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(helmet());
-const _dirname = path.dirname("");
-const buildPath = path.join(_dirname, "../client/build");
-console.log(buildPath);
+app.use(express.static("../client/build"));
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname,"client","build","index.html"))
+})
+
+
 app.use(express.static(buildPath));
 
 app.use(cors({
