@@ -10,6 +10,7 @@ import { getSignUp } from "../store/AuthRequests";
 // rsc
 
 const RegisterForm = (props) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [data, setData] = useState({
         firstName: "",
@@ -26,7 +27,7 @@ const RegisterForm = (props) => {
         message: "",
     });
 
-    const navigate = useNavigate();
+    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -67,9 +68,7 @@ const RegisterForm = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatch(getSignUp(data))
-
-        dispatch(getSignUp(data));
-        window.location.href = '/home';
+        navigate('/home');
     }
 
 

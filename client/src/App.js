@@ -27,19 +27,6 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path="/home" element={<HomeForm />} />
           </Route>
-
-
-          {/* {userToken ? (
-            <Route path="/home" element={<HomeForm></HomeForm>}></Route>
-          ) : (
-            <>
-              <Route path="/" element={<LoginForm></LoginForm>}></Route>
-              <Route
-                path="/register"
-                element={<RegisterForm></RegisterForm>}
-              ></Route>
-            </>
-          )} */}
         </Routes>
       </div>
     </div>

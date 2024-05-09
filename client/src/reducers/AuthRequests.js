@@ -14,7 +14,6 @@ export const AuthRequests = createSlice({
     userToken,
     error: null,
     success: false,
-    downloadResume: false,
   },
   extraReducers: (builder) => {
     // SignIn
@@ -74,14 +73,10 @@ export const AuthRequests = createSlice({
       state.userInfo = {};
       state.userToken = null;
       state.error = null;
-    },
-
-    downloadReumse: (state, { payload }) => {
-      state.downloadResume = payload;
-    },
+    }
   },
 });
 
-export const { logout, downloadReumse } = AuthRequests.actions;
+export const { logout } = AuthRequests.actions;
 
 export default AuthRequests.reducer;

@@ -41,7 +41,6 @@ exports.signIn = catchAsync(async (req, res) => {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            role: user.role,
         };
         res.status(200).json({ token: token, user: person });
     }
